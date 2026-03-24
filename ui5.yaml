@@ -1,0 +1,22 @@
+specVersion: "4.0"
+metadata:
+  name: "@ui5/schedule-app"
+type: application
+framework:
+  name: OpenUI5
+  version: "1.61.0"
+  libraries:
+    - name: sap.m
+    - name: sap.f
+    - name: sap.ui.unified
+
+resources:
+  configuration:
+    paths:
+      webapp: webapp
+server:
+  customMiddleware:
+    - name: ui5-middleware-index
+      afterMiddleware: compression
+      configuration:
+        index: "index.html"

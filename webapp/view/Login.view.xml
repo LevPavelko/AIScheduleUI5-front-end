@@ -1,0 +1,55 @@
+<mvc:View
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	controllerName="sap.ui.schedule.controller.Login"
+	displayBlock="true">
+
+	<App id="loginApp">
+		<pages>
+			<Page showHeader="false" backgroundDesign="Solid">
+				<content>
+					<VBox
+						height="100%"
+						justifyContent="Center"
+						alignItems="Center">
+						<Panel
+							width="22rem"
+							headerText="Login"
+							class="sapUiMediumMargin">
+							<form:SimpleForm
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanL="3" labelSpanM="3"
+								emptySpanL="0" emptySpanM="0"
+								columnsL="1" columnsM="1">
+								<form:content>
+									<Label text="Email"/>
+									<Input id="Email"
+										   placeholder="Enter email"/>
+
+									<Label text="Password"/>
+									<Input id="Password"
+										   type="Password"
+										   placeholder="Enter password"/>
+
+									<Label text=""/>
+									<Button text="Login"
+											type="Emphasized"
+											width="100%"
+											press="onBtnClick"/>
+									<Label text="No account?"/>
+									<Button text="Sign up"
+											type="Emphasized"
+											width="100%"
+											press="onBtnSignUp"/>
+
+								</form:content>
+							</form:SimpleForm>
+						</Panel>
+					</VBox>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
