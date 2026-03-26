@@ -1,32 +1,37 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	'sap/m/MessageBox'
-], function (Controller, JSONModel, MessageBox, UI5Date) {
+	"sap/m/MessageBox",
+	"sap/ui/schedule/util/Cookies",
+	"sap/ui/schedule/util/JwtUtil"
+], function (Controller, JSONModel, MessageBox, Cookies, JwtUtil) {
 	"use strict";
-	function getCookie(sName) {
-		const sSearch = sName + "=";
-		const aCookies = document.cookie.split(";");
-		for (let i = 0; i < aCookies.length; i++) {
-			let sCookie = aCookies[i].trim();
-			if (sCookie.indexOf(sSearch) === 0) {
-				return sCookie.substring(sSearch.length, sCookie.length);
-			}
-		}
-		return null;
-	}
 
 	return Controller.extend("sap.ui.schedule.controller.App", {
-		onInit: async function () {
-
-			console.log("App onInit, owner:", this.getOwnerComponent());
-
-			var oRouter = this.getOwnerComponent().getRouter();
+		onInit:  function () {
+			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("App").attachPatternMatched(this._onRouteMatched, this);
+			this._loadStudyDataAndInitCalendar();
+		},
 
-
-			var oPC = this.byId("planningCalendar");
-			var sUrl = "http://localhost:5678/webhook-test/a800bfb2-8221-4f39-ab69-a9c8c5cd1366";
+		_loadStudyDataAndInitCalendar: async function () {
+			let oPC = this.byId("planningCalendar");
+			const userId = Cookies.getCookie("id");
+			let url = `http://localhost:5082/api/studydata/getByUserId/${userId}`;
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+				}
+			});
+			if(!response.ok) {
+				MessageBox.error();
+				const errorBody = await response.text();
+				console.log("ERROR status:", response.status, errorBody);
+				return;
+			}
+			const data = await response.json();
+			let n8nUrl = "http://localhost:5678/webhook/a800bfb2-8221-4f39-ab69-a9c8c5cd1366";
 			/*var oMockBackendData = {
 				lectures: [
 					{
@@ -81,28 +86,32 @@ sap.ui.define([
 				]
 			};*/
 
-			const response = await fetch(sUrl, {
+
+			const n8nResponse = await fetch(n8nUrl, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
 				},
 				body: JSON.stringify({
-					course: "Informatik",
-					uni: "Uni Wien",
-					semester: "second",
-					link: "https://ufind.univie.ac.at/de/vvz.html"
+					course: data.major.name,
+					uni: data.university.name,
+					semester: data.semester,
+					link: data.university.link,
 				})
 			});
-			const result = await response.json();
-			/*сделать нормальную обработку ошибок,приверки и тд*/
+			if(!response.ok) {
+				MessageBox.error();
+				const errorBody = await response.text();
+				console.log("ERROR status:", response.status, errorBody);
+				return;
+			}
+			const result = await n8nResponse.json();
 			let sJson = result.output.trim();
 			sJson = sJson.replace(/^```json/i, "").replace(/```$/, "").trim();
 
-
 			const payload = JSON.parse(sJson);
 
-
-			var oData = {
+			let oData = {
 				startDate: new Date(),               // calendar start
 				appointments: payload.lectures.map(function (l) {
 					const oStart = new Date(l.start);
@@ -124,38 +133,39 @@ sap.ui.define([
 				})
 			};
 
-			var oModel = new JSONModel(oData);
+			let oModel = new JSONModel(oData);
 			this.getView().setModel(oModel);
 
-			var oSPC = this.byId("planningCalendar");
+			let oSPC = this.byId("planningCalendar");
 			oSPC.setSelectedView(
 				oSPC.getViews().find(function (v) {
 					return v.getKey() === "Day";
 				})
 			);
 		},
-
 		_onRouteMatched: function () {
-			console.log("_onRouteMatched fired");
-			const jwt = getCookie("jwt");
-			console.log("JWT in _onRouteMatched", jwt);
-			if (!jwt) {
+
+			const jwt = Cookies.getCookie("jwt");
+			let isValid = JwtUtil.isJwtValid(jwt);
+
+			if (!isValid) {
 				this.getOwnerComponent().getRouter().navTo("Login", {}, true);
 			}
+
 		},
 		onAppointmentSelect: function (oEvent) {
-			/*var oAppointment = oEvent.getParameter("appointment");
+			var oAppointment = oEvent.getParameter("appointment");
 			if (!oAppointment) {
 				return;
 			}
 
 			var sTitle = oAppointment.getTitle();
-			var sInfo  = oAppointment.getText(); // bound to {info}
+			var sInfo  = oAppointment.getText();
 
 			sap.m.MessageBox.information(
 				sTitle + "\n\n" + sInfo
-			);*/
-			this.getOwnerComponent().getRouter().navTo("Login");
+			);
+
 		}
 
 

@@ -11,10 +11,7 @@ sap.ui.define([
 		},
 
 		init: function () {
-			// call the base component's init function
 			UIComponent.prototype.init.apply(this, arguments);
-
-			// initialize the router so getOwnerComponent().getRouter() works
 			this.getRouter().initialize();
 		}
 	});

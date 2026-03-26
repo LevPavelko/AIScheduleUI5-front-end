@@ -26,20 +26,20 @@
 								<form:content>
 									<Label text="Email"/>
 									<Input id="Email"
-										   placeholder="Enter email"/>
+										   placeholder="E-Mail eingeben"/>
 
 									<Label text="Password"/>
 									<Input id="Password"
 										   type="Password"
-										   placeholder="Enter password"/>
+										   placeholder="Passwort eingeben"/>
 
-									<Label text=""/>
+									<Label id="warning" text=""/>
 									<Button text="Login"
 											type="Emphasized"
 											width="100%"
 											press="onBtnClick"/>
-									<Label text="No account?"/>
-									<Button text="Sign up"
+									<Label text="Kein Konto?"/>
+									<Button text="Melden Sie sich an"
 											type="Emphasized"
 											width="100%"
 											press="onBtnSignUp"/>

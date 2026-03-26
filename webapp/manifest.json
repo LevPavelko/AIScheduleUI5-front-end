@@ -53,6 +53,11 @@
 				{
 					"uri": "css/styles.css"
 				}
+			],
+			"util": [
+				{
+					"uri": "util/Cookies.js"
+				}
 			]
 		},
 		"routing": {
@@ -78,6 +83,11 @@
 					"name": "SignUp",
 					"pattern": "signup",
 					"target": "SignUp"
+				},
+				{
+					"name": "StudyDataForm",
+						"pattern": "studyDataForm",
+					"target": "StudyDataForm"
 				}
 			],
 			"targets": {
@@ -95,6 +105,11 @@
 					"type": "View",
 					"path": "sap.ui.schedule.view",
 					"name": "SignUp"
+				},
+				"StudyDataForm": {
+					"type": "View",
+					"path": "sap.ui.schedule.view",
+					"name": "StudyDataForm"
 				}
 			}
 		}

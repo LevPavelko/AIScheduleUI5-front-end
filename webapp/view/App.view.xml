@@ -4,29 +4,32 @@
 		  controllerName="sap.ui.schedule.controller.App">
 
 	<m:App id="app">
-		<m:SinglePlanningCalendar
-			id="planningCalendar"
-			startDate="{/startDate}"
-			appointments="{/appointments}"
-			selectedView="Day"
-			fullDay="false"
-			appointmentSelect=".onAppointmentSelect">
+		<m:Page showHeader="false">
+			<m:SinglePlanningCalendar
+				id="planningCalendar"
+				startDate="{/startDate}"
+				appointments="{/appointments}"
 
-			<m:views>
-				<m:SinglePlanningCalendarDayView key="Day" title="Stunden"/>
-				<m:SinglePlanningCalendarWorkWeekView key="Week" title="1 Woche"/>
-			</m:views>
+				fullDay="false"
+				appointmentSelect=".onAppointmentSelect">
 
-			<m:appointments>
-				<unified:CalendarAppointment
-					title="{title}"
-					text="{timeRange}"
-					startDate="{startDate}"
-					endDate="{endDate}"
-					type="{type}"/>
-			</m:appointments>
+				<m:views>
+					<m:SinglePlanningCalendarDayView key="Day" title="Stunden"/>
+					<m:SinglePlanningCalendarWorkWeekView key="Week" title="1 Woche"/>
+				</m:views>
 
-		</m:SinglePlanningCalendar>
+				<m:appointments>
+					<unified:CalendarAppointment
+						title="{title}"
+						text="{timeRange}"
+						startDate="{startDate}"
+						endDate="{endDate}"
+						type="{type}"/>
+
+				</m:appointments>
+
+			</m:SinglePlanningCalendar>
+		</m:Page>
 	</m:App>
 </mvc:View>
 

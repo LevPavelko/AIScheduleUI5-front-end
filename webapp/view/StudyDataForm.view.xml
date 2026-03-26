@@ -1,0 +1,68 @@
+<mvc:View
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	controllerName="sap.ui.schedule.controller.StudyDataForm"
+	displayBlock="true">
+
+	<App id="studyDataFormApp">
+		<pages>
+			<Page showHeader="false" backgroundDesign="Solid">
+				<content>
+					<VBox height="100%" justifyContent="Center" alignItems="Center">
+						<Panel width="22rem" headerText="Study data" class="sapUiMediumMargin">
+							<form:SimpleForm
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanL="3" labelSpanM="3"
+								emptySpanL="0" emptySpanM="0"
+								columnsL="1" columnsM="1">
+								<form:content>
+
+									<Label text="University"/>
+									<Select id="uniSelect"
+											items="{
+                                                path: 'viewModel>/universities'
+                                            }"
+											change=".onUniversityChange">
+										<items>
+											<core:Item xmlns:core="sap.ui.core"
+													   key="{viewModel>id}"
+													   text="{viewModel>name}" />
+										</items>
+									</Select>
+
+									<Label text="Major"/>
+									<Select id="majorSelect"
+											enabled="true"
+											items="{
+                                                path: 'viewModel>/majors'
+                                            }">
+										<items>
+											<core:Item xmlns:core="sap.ui.core"
+													   key="{viewModel>id}"
+													   text="{viewModel>name}" />
+										</items>
+									</Select>
+
+									<Label text="Semester"/>
+									<Input id="semesterInput"
+										   type="Number"
+										   placeholder="Enter semester (1,2,3...)"/>
+
+									<Label id="warning" text=""/>
+
+									<Button text="Save"
+											type="Emphasized"
+											width="100%"
+											press=".onSavePress"/>
+
+								</form:content>
+							</form:SimpleForm>
+						</Panel>
+					</VBox>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,7 +1,6 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/ui/schedule/util/hash"
-], function(Controller, HashUtil) {
+	"sap/ui/core/mvc/Controller"
+], function(Controller) {
 	"use strict";
 
 
@@ -26,9 +25,7 @@ sap.ui.define([
 				warning.addStyleClass("redLabel")
 				return;
 			}
-			console.log("SD");
-			const hashedPassword = await HashUtil.hashPassword(password);
-			console.log("ddd: " + hashedPassword);
+
 			var sUrl = "http://localhost:5082/api/auth/signup";
 			const response = await fetch(sUrl, {
 				method: "POST",
@@ -38,7 +35,7 @@ sap.ui.define([
 				body: JSON.stringify({
 					name: name,
 					email: email,
-					password: hashedPassword,
+					password: password,
 				})
 			});
 			if(!response.ok){
@@ -49,11 +46,11 @@ sap.ui.define([
 
 			const data = await response.json();
 			document.cookie = "jwt=" + encodeURIComponent(data.jwt) + "; path=/; max-age=3600";
-			document.cookie = "sessionId=" + encodeURIComponent(data.id) + "; path=/; max-age=3600";
+			document.cookie = "id=" + encodeURIComponent(data.id) + "; path=/; max-age=3600";
 
 			console.log("JWT:", data.jwt);
 			console.log("Encrypted Id:", data.id);
-			this.getOwnerComponent().getRouter().navTo("App", {}, true);
+			this.getOwnerComponent().getRouter().navTo("StudyDataForm", {}, true);
 
 
 		},
