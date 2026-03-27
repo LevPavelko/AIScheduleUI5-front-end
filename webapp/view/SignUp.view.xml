@@ -15,7 +15,7 @@
 						alignItems="Center">
 						<Panel
 							width="22rem"
-							headerText="Sign Up"
+							headerText="Anmeldung"
 							class="sapUiMediumMargin">
 							<form:SimpleForm
 								editable="true"
@@ -26,25 +26,25 @@
 								<form:content>
 									<Label text="Name"/>
 									<Input id="Name"
-										   placeholder="Enter name"/>
+										   placeholder="Name eingeben"/>
 
 									<Label text="Email"/>
 									<Input id="Email"
-										   placeholder="Enter email"/>
+										   placeholder="E-Mail eingeben"/>
 
 									<Label text="Password"/>
 									<Input id="Password"
 										   type="Password"
-										   placeholder="Enter password"/>
+										   placeholder="Password eingeben"/>
 
-									<Label text="Repeat password"/>
+									<Label text="Passwort wiederholen"/>
 									<Input id="RepeatPassword"
 										   type="Password"
-										   placeholder="Enter password again"/>
+										   placeholder="Passwort erneut eingeben"/>
 
 
 
-									<Button text="Sign Up"
+									<Button text="Melden Sie sich an"
 											type="Emphasized"
 											width="100%"
 											press="onBtnClick"/>
