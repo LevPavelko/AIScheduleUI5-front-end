@@ -15,14 +15,13 @@
 						alignItems="Center">
 						<Panel
 							width="22rem"
-							headerText="Login"
-							class="sapUiMediumMargin">
+							headerText="Login">
 							<form:SimpleForm
 								editable="true"
 								layout="ResponsiveGridLayout"
 								labelSpanL="3" labelSpanM="3"
 								emptySpanL="0" emptySpanM="0"
-								columnsL="1" columnsM="1">
+								columnsL="1" columnsM="1" >
 								<form:content>
 									<Label text="Email"/>
 									<Input id="Email"
@@ -33,19 +32,22 @@
 										   type="Password"
 										   placeholder="Passwort eingeben"/>
 
-									<Label id="warning" text=""/>
+
 									<Button text="Login"
 											type="Emphasized"
 											width="100%"
 											press="onBtnClick"/>
-									<Label text="Kein Konto?"/>
-									<Button text="Melden Sie sich an"
-											type="Emphasized"
-											width="100%"
-											press="onBtnSignUp"/>
+
 
 								</form:content>
+
 							</form:SimpleForm>
+							<Label id="warning"  text=""  textAlign="Center" width="100%"/>
+							<Label text="Kein Konto?" textAlign="Center" width="100%" />
+							<Button text="Melden Sie sich an"
+									type="Emphasized"
+									width="100%"
+									press="onBtnSignUp"/>
 						</Panel>
 					</VBox>
 				</content>

@@ -2,6 +2,3 @@
 	color: red !important;
 }
 
-.sapUiForm .sapUiFormResGridCont .sapMLabel.redLabel::after {
-	content: "" !important;
-}

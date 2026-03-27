@@ -41,7 +41,7 @@
 									<Input id="RepeatPassword"
 										   type="Password"
 										   placeholder="Enter password again"/>
-									<Label id="warning"  text=""  />
+
 
 
 									<Button text="Sign Up"
@@ -51,7 +51,7 @@
 
 								</form:content>
 							</form:SimpleForm>
-
+							<Label id="warning"  text=""  textAlign="Center" width="100%"/>
 						</Panel>
 					</VBox>
 				</content>

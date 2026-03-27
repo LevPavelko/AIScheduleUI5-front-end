@@ -11,12 +11,12 @@ sap.ui.define([
 		onInit:  function () {
 			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("App").attachPatternMatched(this._onRouteMatched, this);
-			this._loadStudyDataAndInitCalendar();
+
 		},
 
-		_loadStudyDataAndInitCalendar: async function () {
+		_loadStudyDataAndInitCalendar: async function (userId) {
 			let oPC = this.byId("planningCalendar");
-			const userId = Cookies.getCookie("id");
+
 			let url = `http://localhost:5082/api/studydata/getByUserId/${userId}`;
 			const response = await fetch(url, {
 				method: "GET",
@@ -99,10 +99,10 @@ sap.ui.define([
 					link: data.university.link,
 				})
 			});
-			if(!response.ok) {
+			if(!n8nResponse.ok) {
 				MessageBox.error();
-				const errorBody = await response.text();
-				console.log("ERROR status:", response.status, errorBody);
+				const errorBody = await n8nResponse.text();
+				console.log("ERROR status:", n8nResponse.status, errorBody);
 				return;
 			}
 			const result = await n8nResponse.json();
@@ -143,7 +143,7 @@ sap.ui.define([
 				})
 			);
 		},
-		_onRouteMatched: function () {
+		_onRouteMatched: async function () {
 
 			const jwt = Cookies.getCookie("jwt");
 			let isValid = JwtUtil.isJwtValid(jwt);
@@ -151,6 +151,13 @@ sap.ui.define([
 			if (!isValid) {
 				this.getOwnerComponent().getRouter().navTo("Login", {}, true);
 			}
+			const userId = Cookies.getCookie("id");
+			if (!userId) {
+				MessageBox.error("No user id found.");
+				this.getOwnerComponent().getRouter().navTo("Login", {}, true);
+				return;
+			}
+			await this._loadStudyDataAndInitCalendar(userId);
 
 		},
 		onAppointmentSelect: function (oEvent) {
